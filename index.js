@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const nodemailer=require('nodemailer');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 const mongoose=require("mongoose");
 const app = express();
 
@@ -42,11 +43,8 @@ app.use(express.json());
 //   });
 
 
-// Set up MongoDB URI
-const mongoURI = 'mongodb+srv://tojinajoseph123:GlXOGKLmerRQTCYt@cluster0.qokad.mongodb.net/myPortfolio?retryWrites=true&w=majority';
-
 // Connect to MongoDB
-mongoose.connect(mongoURI, {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
