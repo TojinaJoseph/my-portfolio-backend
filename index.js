@@ -10,7 +10,11 @@ const app = express();
 app.use(bodyParser.json());
 
 // Middleware to allow cross-origin requests (important for React and Node to talk)
-app.use(cors());
+app.use(cors(
+  {
+    origin: "https://tojinajoseph.github.io", // Replace with your frontend domain
+  }
+));
 
 // Middleware to parse JSON requests
 app.use(express.json());
