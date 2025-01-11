@@ -9,10 +9,22 @@ const app = express();
 
 app.use(bodyParser.json());
 
+const allowedOrigins = [
+  "https://tojinajoseph.github.io",
+  "http://localhost:5173",
+];
+
 // Middleware to allow cross-origin requests (important for React and Node to talk)
 app.use(cors(
   {
-    origin: "https://tojinajoseph.github.io", // Replace with your frontend domain
+    origin: (origin, callback) => {
+      // Allow all origins in the allowedOrigins list
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true); // Allow the request
+      } else {
+        callback(new Error("Not allowed by CORS")); // Reject the request
+      }
+    }, // Replace with your frontend domain
   }
 ));
 
