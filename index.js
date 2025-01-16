@@ -67,17 +67,29 @@ const userSchema = new mongoose.Schema({
 // Create a model from the schema
 const User = mongoose.model('User', userSchema);
 
+
+app.get('/api/getmail', async (req ,res) => {
+  console.log("hjhjhjh")
+  try {
+    console.log("in server get")
+    const users = await User.find(); // Retrieve all users from the database
+    console.log(users)
+    return res.status(200).json(users); // Send data back as JSON
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching data from MongoDB', error });
+  }
+});
 // Simple API route to test
 app.post('/api/sendmail', (req, res) => {
   const {name,subject,email,message} =req.body.formData;
-
+  console.log("in server post")
   const newUser = new User({
     name: name,
     email: email,
     subject: subject,
     message: message
   });
-  
+  console.log("in server post")
   newUser.save()
     .then((savedUser) => {
       return res.send({message:'Message sent successfully with data'});
@@ -107,6 +119,8 @@ app.post('/api/sendmail', (req, res) => {
 
   
 });
+
+
 
 // Start the server
 const PORT = 5000;
