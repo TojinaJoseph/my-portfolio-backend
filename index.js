@@ -123,7 +123,7 @@ app.post('/api/sendmail', (req, res) => {
 // Update an item
 app.put('/api/items/:id', async (req, res) => {
   const { name, email,subject,message} = req.body;
-  const updatedItem = await Item.findByIdAndUpdate(
+  const updatedItem = await User.findByIdAndUpdate(
       req.params.id,
       { name, email,subject,message },
       { new: true }
