@@ -131,6 +131,26 @@ app.put('/api/items/:id', async (req, res) => {
   res.json(updatedItem);
 });
 
+
+//delete an item
+app.delete('/api/delete/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Delete the item by ID
+    const deletedItem = await User.findByIdAndDelete(id);
+
+    if (!deletedItem) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+
+    res.status(200).json({ message: 'Item deleted successfully', item: deletedItem });
+  } catch (error) {
+    console.error('Error deleting item:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Start the server
 const PORT = 5000;
 app.listen(PORT, () => {
